@@ -1,0 +1,36 @@
+import { useEffect, useState } from "react";
+import Cart from "../components/Cart";
+import { Container } from "../components/Container";
+import Header from "../components/Header";
+import Product, { ProductProps } from "../components/Product";
+import { useProducts } from "../hook/Products";
+
+const Home = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { products,setProducts } = useProducts();
+  
+  useEffect(() => {
+    setProducts()
+  },[setProducts])
+
+  return (
+    <>
+      <Header setIsOpen={setIsOpen} />
+      <Container>
+      {products.map(product => 
+      <Product
+        key={product.id}
+        id={product.id}
+        picture={product.picture}
+        name={product.name}
+        price={product.price}
+        stock={product.quantity}
+      />
+      )}
+        <Cart isOpen={isOpen} setIsOpen={setIsOpen} />
+      </Container>
+    </>
+  );
+};
+
+export default Home;
